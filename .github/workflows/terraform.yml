@@ -36,7 +36,7 @@ jobs:
 
     # Install the Terraform Cloud API token to the Terraform CLI configuration file
     - name: Setup Terraform Cloud Credentials
-      run: echo "$TERRAFORM_CLOUD_TOKEN" > .terraform.d/credentials.tfrc.json
+      run: echo "{\"credentials\":{\"app.terraform.io\":{\"token\":\"$TERRAFORM_CLOUD_TOKEN\"}}}" > ~/.terraform.d/credentials.tfrc.json
       env:
         TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
