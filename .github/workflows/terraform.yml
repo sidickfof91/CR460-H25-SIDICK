@@ -70,7 +70,7 @@ jobs:
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
-      run: echo "$TERRAFORM_CLOUD_TOKEN" > ~/.terraform/credentials.tfrc.json
+      run: echo "$TERRAFORM_CLOUD_TOKEN" > ~/.github/workflows/credentials.tfrc.json
       env:
           TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
