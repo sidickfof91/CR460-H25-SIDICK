@@ -14,45 +14,42 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
 
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v4
 
-    # Install Terraform CLI
+    # Setup Terraform CLI
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: latest # ou spécifie une version précise comme "1.4.0"
+        terraform_version: latest
 
-    # Create the directory for the credentials file if it doesn't exist
+    # Create Terraform configuration directory
     - name: Create Terraform configuration directory
       run: mkdir -p ~/.terraform.d
 
-    # Install the Terraform Cloud API token to the Terraform CLI configuration file
+    # Setup Terraform Cloud credentials
     - name: Setup Terraform Cloud Credentials
-      run: echo "{\"credentials\":{\"app.terraform.io\":{\"token\":\"$TERRAFORM_CLOUD_TOKEN\"}}}" > ~/.terraform.d/credentials.tfrc.json
+      run: |
+        mkdir -p ~/.terraform.d
+        echo "{\"credentials\":{\"app.terraform.io\":{\"token\":\"$TERRAFORM_CLOUD_TOKEN\"}}}" > ~/.terraform.d/credentials.tfrc.json
       env:
         TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
-    # Initialize a new or existing Terraform working directory
+    # Initialize Terraform working directory
     - name: Terraform Init
       run: terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
 
-    # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
 
-    # On push to "main", apply the changes
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
