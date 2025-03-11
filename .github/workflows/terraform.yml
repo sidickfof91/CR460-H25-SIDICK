@@ -34,9 +34,7 @@ jobs:
 
     # Setup Terraform Cloud credentials
     - name: Setup Terraform Cloud Credentials
-      run: |
-        mkdir -p ~/.terraform.d
-        echo "{\"credentials\":{\"app.terraform.io\":{\"token\":\"$TERRAFORM_CLOUD_TOKEN\"}}}" > ~/.terraform.d/credentials.tfrc.json
+      run:
       env:
         TERRAFORM_CLOUD_TOKEN: 2B27wzU5ziAupA.atlasv1.qJsusT0TdJsEpwtYAuNmdqByWmZiT2WT5uL8z9YVcNbRZHJNe9Ud7LQu44Jep5xez60 
 
