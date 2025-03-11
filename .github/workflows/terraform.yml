@@ -36,7 +36,7 @@ jobs:
     - name: Setup Terraform Cloud Credentials
       run:
       env:
-        TERRAFORM_CLOUD_TOKEN: 2B27wzU5ziAupA.atlasv1.qJsusT0TdJsEpwtYAuNmdqByWmZiT2WT5uL8z9YVcNbRZHJNe9Ud7LQu44Jep5xez60 
+        TERRAFORM_CLOUD_TOKEN:  ${{secrets.TERRAFORM_CLOUD_TOKEN}}
 
     # Initialize Terraform working directory
     - name: Terraform Init
