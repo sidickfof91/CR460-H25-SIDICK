@@ -30,9 +30,13 @@ jobs:
       with:
         terraform_version: latest # ou spécifie une version précise comme "1.4.0"
 
+    # Create the directory for the credentials file if it doesn't exist
+    - name: Create Terraform configuration directory
+      run: mkdir -p ~/.terraform.d
+
     # Install the Terraform Cloud API token to the Terraform CLI configuration file
     - name: Setup Terraform Cloud Credentials
-      run: echo "$TERRAFORM_CLOUD_TOKEN" > ~/.terraform.d/credentials.tfrc.json
+      run: echo "$TERRAFORM_CLOUD_TOKEN" > .terraform.d/credentials.tfrc.json
       env:
         TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
