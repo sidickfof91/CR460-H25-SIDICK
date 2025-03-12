@@ -1,18 +1,18 @@
 terraform {
-  
+
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "~> 4.0"
     }
   }
   backend "remote" {
     organization = "CR460SEEDEEK"
- 
+
     workspaces {
-       name = "CR460-H25-SIDICK"
-      }
+      name = "CR460-H25-SIDICK"
     }
+  }
 }
 
 provider "azurerm" {
@@ -37,10 +37,10 @@ resource "azurerm_virtual_network" "example" {
 }
 
 resource "azurerm_subnet" "example" {
-  name                = "internal"
-  resource_group_name = azurerm_resource_group.example.name
-  virtual_network_name= azurerm_virtual_network.example.location
-  address_prefixes       = ["10.0.2.0/24"]
+  name                 = "internal"
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.location
+  address_prefixes     = ["10.0.2.0/24"]
 }
 
 resource "azurerm_network_interface" "example" {
@@ -49,10 +49,10 @@ resource "azurerm_network_interface" "example" {
   resource_group_name = azurerm_resource_group.example.name
 
   ip_configuration {
-      name                        = "internal"
-      subnet_id                   = azurerm_subnet.example.id
-      private_ip_address_allocation = "Dynamic"
-    }
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
 }
 
 resource "azurerm_windows_virtual_machine" "example" {
@@ -66,8 +66,8 @@ resource "azurerm_windows_virtual_machine" "example" {
     azurerm_network_interface.example.id
   ]
   os_disk {
-    name              = "example-os-disk"
-    caching           = "ReadWrite"
+    name                 = "example-os-disk"
+    caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
 
