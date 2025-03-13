@@ -6,7 +6,7 @@ terraform {
       version = "~> 4.0"
     }
   }
-  backend "remote" {
+  cloud {
     organization = "CR460SEEDEEK"
 
     workspaces {
@@ -18,10 +18,10 @@ terraform {
 provider "azurerm" {
   features {}
 
-  subscription_id = "ef6f84c9-7e4a-49a1-b390-4df9d30c8923"
-  client_id       = "1a3e2f02-57cb-45b2-8741-c93d5afc9fa5"
-  client_secret   = "0jS8Q~vonio-mDQdt491DP5UyzTf6dFSj.eqrbFK"
-  tenant_id       = "e8dd862d-223a-4c23-b0b5-f1e7234a9be5"
+  # subscription_id = "ef6f84c9-7e4a-49a1-b390-4df9d30c8923"
+  # client_id       = "1a3e2f02-57cb-45b2-8741-c93d5afc9fa5"
+  # client_secret   = "0jS8Q~vonio-mDQdt491DP5UyzTf6dFSj.eqrbFK"
+  # tenant_id       = "e8dd862d-223a-4c23-b0b5-f1e7234a9be5"
 }
 
 resource "azurerm_resource_group" "example" {
@@ -39,8 +39,8 @@ resource "azurerm_virtual_network" "example" {
 resource "azurerm_subnet" "example" {
   name                 = "internal"
   resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.location
-  address_prefixes     = ["10.0.2.0/24"]
+  virtual_network_name = "CR460SIDICK-G1-network"
+  address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_network_interface" "example" {
@@ -74,7 +74,7 @@ resource "azurerm_windows_virtual_machine" "example" {
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
+    sku       = "2016-Datacenter"
     version   = "latest"
   }
 }
