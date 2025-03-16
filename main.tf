@@ -26,7 +26,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "example" {
   name     = "CR460SIDICK-G1-resources"
-  location = "East US"
+  location = "eastus"
 }
 
 resource "azurerm_virtual_network" "example" {
@@ -39,7 +39,7 @@ resource "azurerm_virtual_network" "example" {
 resource "azurerm_subnet" "example" {
   name                 = "internal"
   resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.location
+  virtual_network_name = azurerm_virtual_network.example.name
   address_prefixes     = ["10.0.2.0/24"]
 }
 
@@ -65,6 +65,8 @@ resource "azurerm_windows_virtual_machine" "example" {
   network_interface_ids = [
     azurerm_network_interface.example.id
   ]
+  computer_name       = "CR460-VM25"  # Nom explicite et plus court
+
   os_disk {
     name                 = "example-os-disk"
     caching              = "ReadWrite"
@@ -74,9 +76,8 @@ resource "azurerm_windows_virtual_machine" "example" {
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
+    sku       = "2016-Datacenter"
     version   = "latest"
   }
 }
-
 
